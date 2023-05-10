@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/ae.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/ar.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/de.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/eu.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/ic_settings_24.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/ic_warning_24.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/it.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/ru.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/drawable/us.xml" value="0.196" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/custom_spinner_layout.xml" value="0.22" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/fragment_news.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/fragment_news_settings.xml" value="0.25" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/fragment_weather.xml" value="0.2" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/fragment_weather_today.xml" value="0.2" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/fragment_weather_week.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/item_current_weather.xml" value="0.25" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/item_news.xml" value="0.33" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/item_week_weather.xml" value="0.33" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/layout/spinner_item.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/menu/bottom_menu.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/mrlaz/AndroidStudioProjects/NewsCast/app/src/main/res/menu/top_menu.xml" value="0.33" />
+        <entry key="..\:/Users/mrlaz/AppData/Local/Android/Sdk/platforms/android-33/data/res/layout/simple_spinner_item.xml" value="0.18802083333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

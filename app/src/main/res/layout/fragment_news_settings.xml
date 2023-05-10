@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".mvvm.ui.NewsSettingsFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Your Country To Get Relevant News"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/spCountryList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Select Sort Options"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:id="@+id/rgSortOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:id="@+id/rbSortByDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort By Date" />
+
+        <RadioButton
+            android:id="@+id/rbSortByPopularity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort By Popularity" />
+
+        <RadioButton
+            android:id="@+id/rbSortByRelevancy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort Relevant To Your Query" />
+
+    </RadioGroup>
+</LinearLayout>
