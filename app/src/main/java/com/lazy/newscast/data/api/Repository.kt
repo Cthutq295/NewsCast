@@ -3,7 +3,6 @@ package com.lazy.newscast.data.api
 import com.lazy.newscast.data.api.news.NewsService
 import com.lazy.newscast.data.api.weather.WeatherService
 import com.lazy.newscast.models.news.News
-import com.lazy.newscast.models.weather.current.Weather
 import com.lazy.newscast.models.weather.forecast.Forecast
 import retrofit2.Response
 import javax.inject.Inject
@@ -21,10 +20,6 @@ class Repository @Inject constructor(
 
     suspend fun getTopHeadlines(country: String, page: Int): Response<News> {
         return newsService.getTopHeadlines(country = country, page = page)
-    }
-
-    suspend fun getCurrentWeather(location: String): Response<Weather> {
-        return weatherService.getCurrentWeather(location)
     }
 
     suspend fun getForecastWeather(location: String): Response<Forecast> {
