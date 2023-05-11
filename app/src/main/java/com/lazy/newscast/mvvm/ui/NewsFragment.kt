@@ -1,10 +1,8 @@
 package com.lazy.newscast.mvvm.ui
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
@@ -12,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.lazy.newscast.R
 import com.lazy.newscast.adapter.NewsAdapter
 import com.lazy.newscast.databinding.FragmentNewsBinding
