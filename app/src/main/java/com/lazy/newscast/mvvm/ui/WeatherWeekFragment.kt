@@ -11,6 +11,7 @@ import com.lazy.newscast.R
 import com.lazy.newscast.adapter.WeekWeatherAdapter
 import com.lazy.newscast.databinding.FragmentWeatherWeekBinding
 import com.lazy.newscast.mvvm.viewmodel.WeatherViewModel
+import com.lazy.newscast.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +32,7 @@ class WeatherWeekFragment : Fragment(R.layout.fragment_weather_week) {
 
         timeEnd = System.currentTimeMillis()
 
-        Log.i("MYDEBUG", " Fragment Load Took: ${timeEnd-timeStart}")
-
+        Log.i("MYDEBUG", " Fragment Load Took: ${timeEnd - timeStart}")
 
         val binding = FragmentWeatherWeekBinding.bind(view)
 
@@ -46,8 +46,25 @@ class WeatherWeekFragment : Fragment(R.layout.fragment_weather_week) {
 
         viewModel.getForecastWeather()
 
-        viewModel.forecastWeather.observe(viewLifecycleOwner){
-            weekAdapter.submitList(it.forecast.forecastday)
+        viewModel.forecastWeather.observe(viewLifecycleOwner) { response ->
+
+            when (response) {
+                is Resource.Success -> {
+                    binding.llInternetError.visibility = View.GONE
+                    binding.pbLoading.visibility = View.GONE
+
+                    binding.rvWeekWeather.visibility = View.VISIBLE
+                    weekAdapter.submitList(response.response.forecast.forecastday)
+                }
+                is Resource.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+                is Resource.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    binding.rvWeekWeather.visibility = View.GONE
+                    binding.llInternetError.visibility = View.VISIBLE
+                }
+            }
         }
     }
 }

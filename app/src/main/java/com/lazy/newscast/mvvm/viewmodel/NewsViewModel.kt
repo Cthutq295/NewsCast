@@ -21,8 +21,7 @@ class NewsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val newsResponse = MutableLiveData<Resource<News>>()
-    val news: LiveData<Resource<News>>
-        get() = newsResponse
+    val news: LiveData<Resource<News>> get() = newsResponse
 
     val page: Int = 1
     val searchQuery = MutableStateFlow<String>("")

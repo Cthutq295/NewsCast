@@ -39,7 +39,6 @@ class NewsFragment : Fragment(R.layout.fragment_news), NewsAdapter.OnItemClickLi
             recyclerViewNews.setHasFixedSize(true)
         }
 
-
         viewModel.getTopHeadline()
 
         viewModel.news.observe(viewLifecycleOwner) { response ->

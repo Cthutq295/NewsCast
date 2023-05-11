@@ -12,6 +12,7 @@ import com.lazy.newscast.adapter.CurrentWeatherAdapter
 import com.lazy.newscast.databinding.FragmentWeatherTodayBinding
 import com.lazy.newscast.models.weather.forecast.Hour
 import com.lazy.newscast.mvvm.viewmodel.WeatherViewModel
+import com.lazy.newscast.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,19 +34,39 @@ class WeatherTodayFragment : Fragment(R.layout.fragment_weather_today), MenuProv
         }
 
         viewModel.getForecastWeather()
-        viewModel.forecastWeather.observe(viewLifecycleOwner) {
-            binding.tvInfo.text = it.current.condition.text
-            binding.tvTemperature.text = it.current.temp_c.toString() + "°C"
-            binding.tvWindSpeed.text = "Wind: " + it.current.wind_mph.toString()
 
-            Glide.with(requireContext())
-                .load("https:" + it.current.condition.icon)
-                .into(binding.ivWeatherIcon)
+        viewModel.forecastWeather.observe(viewLifecycleOwner) { response ->
 
-            val forecastDate = it.forecast.forecastday[0]
-            val hour: List<Hour> = forecastDate.hour
+            when (response) {
+                is Resource.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    binding.llInternetError.visibility = View.GONE
 
-            currentWeatherAdapter.submitList(hour)
+                    binding.llWeatherContent.visibility = View.VISIBLE
+                    binding.tvInfo.text = response.response.current.condition.text
+                    binding.tvTemperature.text = response.response.current.temp_c.toString() + "°C"
+                    binding.tvWindSpeed.text = "Wind: " + response.response.current.wind_mph.toString()
+
+                    Glide.with(requireContext())
+                        .load("https:" + response.response.current.condition.icon)
+                        .into(binding.ivWeatherIcon)
+
+                    val forecastDate = response.response.forecast.forecastday[0]
+                    val hour: List<Hour> = forecastDate.hour
+
+                    currentWeatherAdapter.submitList(hour)
+                }
+                is Resource.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                    binding.llInternetError.visibility = View.GONE
+                    binding.llWeatherContent.visibility = View.GONE
+                }
+                is Resource.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    binding.llInternetError.visibility = View.VISIBLE
+                    binding.llWeatherContent.visibility = View.GONE
+                }
+            }
         }
 
         activity?.addMenuProvider(this)

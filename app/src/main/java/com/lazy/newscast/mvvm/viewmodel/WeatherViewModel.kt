@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lazy.newscast.data.api.Repository
 import com.lazy.newscast.models.weather.forecast.Forecast
+import com.lazy.newscast.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,16 +19,23 @@ class WeatherViewModel @Inject constructor(
     private val connectivityManager: ConnectivityManager
 ) : ViewModel() {
 
-    private val forecastWeatherResponse = MutableLiveData<Forecast>()
-    val forecastWeather: LiveData<Forecast> get() = forecastWeatherResponse
+    private val forecastWeatherResponse = MutableLiveData<Resource<Forecast>>()
+    val forecastWeather: LiveData<Resource<Forecast>> get() = forecastWeatherResponse
 
     fun getForecastWeather() = viewModelScope.launch {
         if (isConnected()) {
+            forecastWeatherResponse.postValue(Resource.Loading())
             val response = repository.getForecastWeather("rostov")
 
             if (response.isSuccessful) {
-                forecastWeatherResponse.postValue(response.body())
+                response.body().let {
+                    forecastWeatherResponse.postValue(Resource.Success(response.body()!!))
+                }
+            } else {
+                forecastWeatherResponse.postValue(Resource.Error(response.message()))
             }
+        } else {
+            forecastWeatherResponse.postValue(Resource.Error("No Internet Connection"))
         }
     }
 
