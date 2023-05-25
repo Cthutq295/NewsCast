@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.lazy.newscast.mvvm.ui.NewsFragment"
+        android:name="com.lazy.newscast.ui.NewsFragment"
         android:label="News"
         tools:layout="@layout/fragment_news" >
         <action
@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/newsSettingsFragment"
-        android:name="com.lazy.newscast.mvvm.ui.NewsSettingsFragment"
+        android:name="com.lazy.newscast.ui.NewsSettingsFragment"
         android:label="News Settings"
         tools:layout="@layout/fragment_news_settings" />
     <fragment
         android:id="@+id/weatherFragment"
-        android:name="com.lazy.newscast.mvvm.ui.WeatherFragment"
+        android:name="com.lazy.newscast.ui.WeatherFragment"
         android:label="Weather"
         tools:layout="@layout/fragment_weather" />
 </navigation>

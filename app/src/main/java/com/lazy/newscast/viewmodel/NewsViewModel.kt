@@ -1,4 +1,4 @@
-package com.lazy.newscast.mvvm.viewmodel
+package com.lazy.newscast.viewmodel
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities

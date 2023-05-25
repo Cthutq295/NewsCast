@@ -1,4 +1,4 @@
-package com.lazy.newscast.mvvm.ui
+package com.lazy.newscast.ui
 
 import android.os.Bundle
 import android.view.View
@@ -11,7 +11,7 @@ import com.lazy.newscast.R
 import com.lazy.newscast.data.Country
 import com.lazy.newscast.data.SortOrder
 import com.lazy.newscast.databinding.FragmentNewsSettingsBinding
-import com.lazy.newscast.mvvm.viewmodel.NewsSettingsViewModel
+import com.lazy.newscast.viewmodel.NewsSettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.lazy.newscast.mvvm.ui
+package com.lazy.newscast.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package com.lazy.newscast.mvvm.ui
+package com.lazy.newscast.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lazy.newscast.R
 import com.lazy.newscast.adapter.WeekWeatherAdapter
 import com.lazy.newscast.databinding.FragmentWeatherWeekBinding
-import com.lazy.newscast.mvvm.viewmodel.WeatherViewModel
+import com.lazy.newscast.viewmodel.WeatherViewModel
 import com.lazy.newscast.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 

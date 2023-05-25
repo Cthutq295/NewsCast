@@ -1,4 +1,4 @@
-package com.lazy.newscast.mvvm.ui
+package com.lazy.newscast.ui
 
 import android.os.Bundle
 import android.view.*
@@ -11,7 +11,7 @@ import com.lazy.newscast.R
 import com.lazy.newscast.adapter.CurrentWeatherAdapter
 import com.lazy.newscast.databinding.FragmentWeatherTodayBinding
 import com.lazy.newscast.models.weather.forecast.Hour
-import com.lazy.newscast.mvvm.viewmodel.WeatherViewModel
+import com.lazy.newscast.viewmodel.WeatherViewModel
 import com.lazy.newscast.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 

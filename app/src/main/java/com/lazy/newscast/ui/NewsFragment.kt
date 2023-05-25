@@ -1,4 +1,4 @@
-package com.lazy.newscast.mvvm.ui
+package com.lazy.newscast.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -14,7 +14,7 @@ import com.lazy.newscast.R
 import com.lazy.newscast.adapter.NewsAdapter
 import com.lazy.newscast.databinding.FragmentNewsBinding
 import com.lazy.newscast.models.news.Article
-import com.lazy.newscast.mvvm.viewmodel.NewsViewModel
+import com.lazy.newscast.viewmodel.NewsViewModel
 import com.lazy.newscast.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
