@@ -22,10 +22,10 @@ class WeatherViewModel @Inject constructor(
     private val forecastWeatherResponse = MutableLiveData<Resource<Forecast>>()
     val forecastWeather: LiveData<Resource<Forecast>> get() = forecastWeatherResponse
 
-    fun getForecastWeather() = viewModelScope.launch {
+    fun getForecastWeather(location: String) = viewModelScope.launch {
         if (isConnected()) {
             forecastWeatherResponse.postValue(Resource.Loading())
-            val response = repository.getForecastWeather("rostov")
+            val response = repository.getForecastWeather(location)
 
             if (response.isSuccessful) {
                 response.body().let {
