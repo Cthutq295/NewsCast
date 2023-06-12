@@ -16,9 +16,9 @@ interface NewsService {
 
     @GET("/v2/everything")
     suspend fun getEverything(
-        @Query("q") query: String = "Игры",
+        @Query("q") query: String,
         @Query("page") page: Int = 1,
-        @Query("sortBy") sortBy: String,
+        @Query("sortBy") sortBy: String = SortOrder.popularity.name,
         @Query("apiKey") apiKey: String = API_KEY_NEWS
     ): Response<News>
 
