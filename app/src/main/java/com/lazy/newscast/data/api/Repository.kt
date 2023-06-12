@@ -31,14 +31,6 @@ class Repository @Inject constructor(
             }
         ).liveData
 
-//    suspend fun getEverything(query: String, page: Int, sortOrder: String = SortOrder.popularity.name): Response<News> {
-//        return newsService.getEverything(query = query, page = page, sortBy = sortOrder)
-//    }
-//
-//    suspend fun getTopHeadlines(country: String, page: Int): Response<News> {
-//        return newsService.getTopHeadlines(country = country, page = page)
-//    }
-
     suspend fun getForecastWeather(location: String): Response<Forecast> {
         return weatherService.getWeatherForecast(location)
     }
