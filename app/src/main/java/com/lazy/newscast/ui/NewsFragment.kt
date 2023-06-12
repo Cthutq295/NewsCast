@@ -6,16 +6,17 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lazy.newscast.R
 import com.lazy.newscast.adapter.NewsAdapter
 import com.lazy.newscast.databinding.FragmentNewsBinding
 import com.lazy.newscast.models.news.Article
 import com.lazy.newscast.viewmodel.NewsViewModel
-import com.lazy.newscast.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,23 +37,15 @@ class NewsFragment : Fragment(R.layout.fragment_news), NewsAdapter.OnItemClickLi
             recyclerViewNews.setHasFixedSize(true)
         }
 
-        viewModel.getTopHeadline()
+        viewModel.news.observe(viewLifecycleOwner) {
+            newsAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
 
-        viewModel.news.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Resource.Success -> {
-                    binding.pbLoading.visibility = View.GONE
-                    binding.llInternetError.visibility = View.GONE
-                    newsAdapter.submitList(response.response.articles)
-                }
-                is Resource.Loading -> {
-                    binding.llInternetError.visibility = View.GONE
-                    binding.pbLoading.visibility = View.VISIBLE
-                }
-                is Resource.Error -> {
-                    binding.pbLoading.visibility = View.GONE
-                    binding.llInternetError.visibility = View.VISIBLE
-                }
+        newsAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                pbLoading.isVisible = loadState.source.refresh is LoadState.Loading
+                recyclerViewNews.isVisible = loadState.source.refresh is LoadState.NotLoading
+                llInternetError.isVisible = loadState.source.refresh is LoadState.Error
             }
         }
 
@@ -73,7 +66,6 @@ class NewsFragment : Fragment(R.layout.fragment_news), NewsAdapter.OnItemClickLi
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank()) {
                     viewModel.searchQuery.value = query
-                    viewModel.getEverything()
                 }
                 return true
             }
