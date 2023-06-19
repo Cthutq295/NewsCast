@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -14,7 +16,6 @@ import com.lazy.newscast.R
 import com.lazy.newscast.adapter.WeekWeatherAdapter
 import com.lazy.newscast.databinding.FragmentWeatherWeekBinding
 import com.lazy.newscast.viewmodel.WeatherViewModel
-import com.lazy.newscast.utils.Resource
 import com.lazy.newscast.utils.UserLocation
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,26 +40,16 @@ class WeatherWeekFragment : Fragment(R.layout.fragment_weather_week) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         getLocation()
 
-        viewModel.getForecastWeather(UserLocation.location)
 
-        viewModel.forecastWeather.observe(viewLifecycleOwner) { response ->
+        viewModel.weekWeather.observe(viewLifecycleOwner){
+            weekAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
 
-            when (response) {
-                is Resource.Success -> {
-                    binding.llInternetError.visibility = View.GONE
-                    binding.pbLoading.visibility = View.GONE
-
-                    binding.rvWeekWeather.visibility = View.VISIBLE
-                    weekAdapter.submitList(response.response.forecast.forecastday)
-                }
-                is Resource.Loading -> {
-                    binding.pbLoading.visibility = View.VISIBLE
-                }
-                is Resource.Error -> {
-                    binding.pbLoading.visibility = View.GONE
-                    binding.rvWeekWeather.visibility = View.GONE
-                    binding.llInternetError.visibility = View.VISIBLE
-                }
+        weekAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                pbLoading.isVisible = loadState.source.refresh is LoadState.Loading
+                rvWeekWeather.isVisible = loadState.source.refresh is LoadState.NotLoading
+                llInternetError.isVisible = loadState.source.refresh is LoadState.Error
             }
         }
     }

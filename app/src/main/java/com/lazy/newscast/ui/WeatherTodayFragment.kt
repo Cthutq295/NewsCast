@@ -7,17 +7,16 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import android.Manifest
 import android.content.pm.PackageManager
+import androidx.core.view.isVisible
+import androidx.paging.LoadState
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.lazy.newscast.R
 import com.lazy.newscast.adapter.CurrentWeatherAdapter
 import com.lazy.newscast.databinding.FragmentWeatherTodayBinding
-import com.lazy.newscast.models.weather.forecast.Hour
 import com.lazy.newscast.viewmodel.WeatherViewModel
-import com.lazy.newscast.utils.Resource
 import com.lazy.newscast.utils.UserLocation
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,40 +43,15 @@ class WeatherTodayFragment : Fragment(R.layout.fragment_weather_today), MenuProv
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         getLocation()
 
-        viewModel.getForecastWeather(UserLocation.location)
+        viewModel.todayWeather.observe(viewLifecycleOwner){
+            currentWeatherAdapter.submitData(viewLifecycleOwner.lifecycle,it)
+        }
 
-        viewModel.forecastWeather.observe(viewLifecycleOwner) { response ->
-
-            when (response) {
-                is Resource.Success -> {
-                    binding.pbLoading.visibility = View.GONE
-                    binding.llInternetError.visibility = View.GONE
-
-                    binding.llWeatherContent.visibility = View.VISIBLE
-                    binding.tvInfo.text = response.response.current.condition.text
-                    binding.tvTemperature.text = response.response.current.temp_c.toString() + "°C"
-                    binding.tvWindSpeed.text =
-                        "Wind: " + response.response.current.wind_mph.toString()
-
-                    Glide.with(requireContext())
-                        .load("https:" + response.response.current.condition.icon)
-                        .into(binding.ivWeatherIcon)
-
-                    val forecastDate = response.response.forecast.forecastday[0]
-                    val hour: List<Hour> = forecastDate.hour
-
-                    currentWeatherAdapter.submitList(hour)
-                }
-                is Resource.Loading -> {
-                    binding.pbLoading.visibility = View.VISIBLE
-                    binding.llInternetError.visibility = View.GONE
-                    binding.llWeatherContent.visibility = View.GONE
-                }
-                is Resource.Error -> {
-                    binding.pbLoading.visibility = View.GONE
-                    binding.llInternetError.visibility = View.VISIBLE
-                    binding.llWeatherContent.visibility = View.GONE
-                }
+        currentWeatherAdapter.addLoadStateListener { loadState ->
+            binding.apply {
+                pbLoading.isVisible = loadState.source.refresh is LoadState.Loading
+                llWeatherContent.isVisible = loadState.source.refresh is LoadState.NotLoading
+                llInternetError.isVisible = loadState.source.refresh is LoadState.Error
             }
         }
 

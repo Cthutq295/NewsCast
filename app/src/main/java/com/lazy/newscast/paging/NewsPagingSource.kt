@@ -8,22 +8,20 @@ import com.lazy.newscast.models.news.Article
 import kotlinx.coroutines.flow.first
 
 class NewsPagingSource(
-    private val repository: NewsService,
+    private val newsService: NewsService,
     private val query: String,
     private val settings: PreferenceManager
 ) : PagingSource<Int, Article>() {
 
-    override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
-        return null
-    }
+    override fun getRefreshKey(state: PagingState<Int, Article>): Int? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val currentPage = params.key ?: 1
         return try {
             val response = if (query.isNullOrEmpty() || query.isBlank() || query == "") {
-                repository.getTopHeadlines(settings.getCountryPref().first(), page = currentPage)
+                newsService.getTopHeadlines(settings.getCountryPref().first(), page = currentPage)
             } else {
-                repository.getEverything(query, page = currentPage, settings.getSortOrderPref().toString())
+                newsService.getEverything(query, page = currentPage, settings.getSortOrderPref().toString())
             }
 
             val data = response.body()?.articles ?: emptyList()

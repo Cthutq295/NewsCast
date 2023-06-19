@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val API_KEY_WEATHER: String = "a4f80e3e46144efaa8c93627212312 "
+const val API_KEY_WEATHER: String = "a4f80e3e46144efaa8c93627212312"
 const val BASE_URL_WEATHER:String = "http://api.weatherapi.com"
 
 interface WeatherService {

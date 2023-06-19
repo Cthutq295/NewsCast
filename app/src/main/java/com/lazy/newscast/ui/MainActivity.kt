@@ -1,4 +1,4 @@
-package com.lazy.newscast
+package com.lazy.newscast.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.lazy.newscast.R
 import com.lazy.newscast.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

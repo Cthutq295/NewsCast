@@ -3,8 +3,8 @@ package com.lazy.newscast.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lazy.newscast.R
@@ -12,7 +12,7 @@ import com.lazy.newscast.databinding.ItemCurrentWeatherBinding
 import com.lazy.newscast.models.weather.forecast.Hour
 
 class CurrentWeatherAdapter(private val context: Context) :
-    ListAdapter<Hour, CurrentWeatherAdapter.CurrentWeatherViewHolder>(DiffCallback()) {
+    PagingDataAdapter<Hour, CurrentWeatherAdapter.CurrentWeatherViewHolder>(DiffCallback()) {
 
     inner class CurrentWeatherViewHolder(private val binding: ItemCurrentWeatherBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -40,7 +40,9 @@ class CurrentWeatherAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: CurrentWeatherViewHolder, position: Int) {
         val currentItem = getItem(position)
-        holder.bind(currentItem)
+        if (currentItem != null) {
+            holder.bind(currentItem)
+        }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Hour>() {
