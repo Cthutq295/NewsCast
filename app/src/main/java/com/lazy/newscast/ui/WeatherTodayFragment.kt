@@ -2,28 +2,22 @@ package com.lazy.newscast.ui
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.Manifest
-import android.content.pm.PackageManager
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.bumptech.glide.Glide
 import com.lazy.newscast.R
 import com.lazy.newscast.adapter.CurrentWeatherAdapter
 import com.lazy.newscast.databinding.FragmentWeatherTodayBinding
 import com.lazy.newscast.viewmodel.WeatherViewModel
-import com.lazy.newscast.utils.UserLocation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WeatherTodayFragment : Fragment(R.layout.fragment_weather_today), MenuProvider {
     private val viewModel: WeatherViewModel by viewModels()
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,11 +34,18 @@ class WeatherTodayFragment : Fragment(R.layout.fragment_weather_today), MenuProv
             rvCurrentWeather.setHasFixedSize(false)
         }
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        getLocation()
+        viewModel.getCurrentWeather()
+        viewModel.currentWeather.observe(viewLifecycleOwner) { response ->
+            binding.tvInfo.text = response.body()!!.current.condition.text
+            binding.tvTemperature.text = response.body()!!.current.temp_c.toString() + "°C"
+            binding.tvWindSpeed.text = "Wind: " + response.body()!!.current.wind_mph.toString()
+            Glide.with(requireContext())
+                .load("https:" + response.body()!!.current.condition.icon)
+                .into(binding.ivWeatherIcon)
+        }
 
-        viewModel.todayWeather.observe(viewLifecycleOwner){
-            currentWeatherAdapter.submitData(viewLifecycleOwner.lifecycle,it)
+        viewModel.todayWeatherByHour.observe(viewLifecycleOwner) { paging ->
+            currentWeatherAdapter.submitData(viewLifecycleOwner.lifecycle, paging)
         }
 
         currentWeatherAdapter.addLoadStateListener { loadState ->
@@ -56,24 +57,6 @@ class WeatherTodayFragment : Fragment(R.layout.fragment_weather_today), MenuProv
         }
 
         activity?.addMenuProvider(this)
-    }
-
-    private fun getLocation() {
-
-        val task = fusedLocationProviderClient.lastLocation
-
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
-            return
-        }
-
-        task.addOnSuccessListener {
-            if(it != null){
-                UserLocation.location
-            }
-        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}

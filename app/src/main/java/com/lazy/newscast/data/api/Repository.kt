@@ -6,9 +6,11 @@ import androidx.paging.liveData
 import com.lazy.newscast.data.PreferenceManager
 import com.lazy.newscast.data.api.news.NewsService
 import com.lazy.newscast.data.api.weather.WeatherService
+import com.lazy.newscast.models.weather.forecast.Forecast
 import com.lazy.newscast.paging.NewsPagingSource
 import com.lazy.newscast.paging.CurrentWeatherPagingSource
 import com.lazy.newscast.paging.ForecastWeatherSource
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,4 +50,8 @@ class Repository @Inject constructor(
             ),
             pagingSourceFactory = { ForecastWeatherSource(weatherService, location) }
         ).liveData
+
+    suspend fun getForecastWeather(location: String): Response<Forecast> {
+        return weatherService.getWeatherForecast(location)
+    }
 }
