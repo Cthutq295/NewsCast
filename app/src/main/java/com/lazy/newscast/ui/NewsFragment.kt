@@ -48,8 +48,11 @@ class NewsFragment : Fragment(R.layout.fragment_news), NewsAdapter.OnItemClickLi
                 llInternetError.isVisible = loadState.source.refresh is LoadState.Error
             }
         }
+    }
 
-        activity?.addMenuProvider(this@NewsFragment)
+    override fun onStart() {
+        super.onStart()
+        activity?.addMenuProvider(this)
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
